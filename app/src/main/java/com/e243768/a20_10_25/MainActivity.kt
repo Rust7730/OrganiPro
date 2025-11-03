@@ -22,7 +22,7 @@ class MainActivity : ComponentActivity() {
             _20_10_25Theme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
                     Column(modifier = Modifier.padding(innerPadding)) {
-                        vista()
+                        vista()//vistas
                     }
 
                 }
