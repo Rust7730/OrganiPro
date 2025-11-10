@@ -9,6 +9,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Email
+import androidx.compose.material.icons.filled.Lock
+import androidx.compose.material.icons.filled.Person
+import androidx.compose.material3.Icon
+
 
 @Composable
 fun FormScreen(
@@ -28,28 +34,37 @@ fun FormScreen(
 
         OutlinedTextField(
             value = viewModel.name,
-            onValueChange = { viewModel.onFieldChange(newName = it) },
+            onValueChange = { /* ... */ },
             label = { Text("Nombre") },
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier.fillMaxWidth(),
+            leadingIcon = { // <-- AÑADIR ESTO
+                Icon(Icons.Default.Person, contentDescription = "Icono de Nombre")
+            }
         )
 
         Spacer(Modifier.height(8.dp))
 
         OutlinedTextField(
             value = viewModel.email,
-            onValueChange = { viewModel.onFieldChange(newEmail = it) },
+            onValueChange = { /* ... */ },
             label = { Text("Email") },
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier.fillMaxWidth(),
+            leadingIcon = { // <-- AÑADIR ESTO
+                Icon(Icons.Default.Email, contentDescription = "Icono de Email")
+            }
         )
 
         Spacer(Modifier.height(8.dp))
 
         OutlinedTextField(
             value = viewModel.password,
-            onValueChange = { viewModel.onFieldChange(newPass = it) },
+            onValueChange = { /* ... */ },
             label = { Text("Contraseña") },
             visualTransformation = PasswordVisualTransformation(),
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier.fillMaxWidth(),
+            leadingIcon = { // <-- AÑADIR ESTO
+                Icon(Icons.Default.Lock, contentDescription = "Icono de Contraseña")
+            }
         )
 
         Spacer(Modifier.height(32.dp))
