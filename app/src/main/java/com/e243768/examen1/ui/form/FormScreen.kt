@@ -32,37 +32,40 @@ fun FormScreen(
 
         Spacer(Modifier.height(16.dp))
 
+        // --- CAMPO NOMBRE (CORREGIDO) ---
         OutlinedTextField(
             value = viewModel.name,
-            onValueChange = { /* ... */ },
+            onValueChange = { newName -> viewModel.onFieldChange(newName = newName) }, // Llama al ViewModel para actualizar el nombre
             label = { Text("Nombre") },
             modifier = Modifier.fillMaxWidth(),
-            leadingIcon = { // <-- AÑADIR ESTO
+            leadingIcon = {
                 Icon(Icons.Default.Person, contentDescription = "Icono de Nombre")
             }
         )
 
         Spacer(Modifier.height(8.dp))
 
+        // --- CAMPO EMAIL (CORREGIDO) ---
         OutlinedTextField(
             value = viewModel.email,
-            onValueChange = { /* ... */ },
+            onValueChange = { newEmail -> viewModel.onFieldChange(newEmail = newEmail) }, // Llama al ViewModel para actualizar el email
             label = { Text("Email") },
             modifier = Modifier.fillMaxWidth(),
-            leadingIcon = { // <-- AÑADIR ESTO
+            leadingIcon = {
                 Icon(Icons.Default.Email, contentDescription = "Icono de Email")
             }
         )
 
         Spacer(Modifier.height(8.dp))
 
+        // --- CAMPO CONTRASEÑA (CORREGIDO) ---
         OutlinedTextField(
             value = viewModel.password,
-            onValueChange = { /* ... */ },
+            onValueChange = { newPass -> viewModel.onFieldChange(newPass = newPass) }, // Llama al ViewModel para actualizar la contraseña
             label = { Text("Contraseña") },
             visualTransformation = PasswordVisualTransformation(),
             modifier = Modifier.fillMaxWidth(),
-            leadingIcon = { // <-- AÑADIR ESTO
+            leadingIcon = {
                 Icon(Icons.Default.Lock, contentDescription = "Icono de Contraseña")
             }
         )

@@ -21,10 +21,14 @@ class FormViewModel @Inject constructor(
 ) : ViewModel() {
 
     var name by mutableStateOf("")
+        private set // Usar 'private set' es una buena práctica para controlar modificaciones desde fuera
     var email by mutableStateOf("")
+        private set
     var password by mutableStateOf("")
+        private set
 
     init {
+        // Este bloque es para recuperar un borrador no guardado, está bien
         viewModelScope.launch {
             val drafts = userPrefs.getDrafts.first()
             if (name.isEmpty()) name = drafts.first
@@ -33,6 +37,7 @@ class FormViewModel @Inject constructor(
         }
     }
 
+    // Esta función actualiza el borrador en DataStore, está bien
     fun onFieldChange(newName: String = name, newEmail: String = email, newPass: String = password) {
         name = newName
         email = newEmail
@@ -43,20 +48,35 @@ class FormViewModel @Inject constructor(
     }
 
     fun saveUser(onSuccess: () -> Unit) {
+        // Buena práctica: validar que los campos no estén vacíos antes de guardar
+        if (name.isBlank() || email.isBlank() || password.isBlank()) {
+            Log.w("EXAMEN_DB", "Intento de guardado fallido: Campos vacíos.")
+            return
+        }
+
         viewModelScope.launch {
             userDao.insertUser(UserEntity(name = name, email = email, password = password))
+            Log.i("EXAMEN_DB", "Usuario guardado: Nombre=$name")
+
+            // Limpiar los campos después de guardar
+            val currentName = name
+            val currentEmail = email
+            val currentPass = password
             name = ""
             email = ""
             password = ""
-            userPrefs.clearDraft()
-            onSuccess()
+
+
         }
     }
 
+    // --- FUNCIÓN CORREGIDA ---
     fun printUsersToLogcat() {
         viewModelScope.launch {
             try {
-                val users = userDao.getAllUsers()
+                // Obtenemos el valor actual del Flow usando .first()
+                val users = userDao.getAllUsers().first()
+
                 Log.d("EXAMEN_DB", "=== INICIO LISTA DE USUARIOS (${users.size}) ===")
                 if (users.isEmpty()) {
                     Log.d("EXAMEN_DB", "No hay usuarios guardados todavía.")
